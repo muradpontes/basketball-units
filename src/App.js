@@ -33,7 +33,7 @@ function App() {
       setPlayers(basketballPlayers.slice(0, playersPerPage));
       setPage(1);
     } catch (error) {
-      console.error('Erro:', error);
+      console.error('erro:', error);
     } finally {
       setIsLoading(false);
     }
@@ -50,7 +50,7 @@ function App() {
     if (!favoritePlayers.some((favPlayer) => favPlayer.idPlayer === player.idPlayer)) {
       setFavoritePlayers([...favoritePlayers, player]);
     } else {
-      alert("Esse jogador já se encontra nos favoritos!");
+      alert("esse jogador já se encontra nos favoritos!");
     }
   };
 

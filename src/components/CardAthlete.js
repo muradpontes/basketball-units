@@ -11,8 +11,8 @@ function CardAthlete({ player, addToFavorites }) {
         />
         <div className="card-body text-center">
           <h5 className="card-title">{player.strPlayer}</h5>
-          <p className="card-text">Nacionalidade: {player.strNationality}</p>
-          <p className="card-text">Time: {player.strTeam}</p>
+          <p className="card-text">nacionalidade: {player.strNationality}</p>
+          <p className="card-text">time: {player.strTeam}</p>
           <button className="btn btn-primary" onClick={() => addToFavorites(player)}>
             adicionar aos favoritos⭐
           </button>

@@ -24,8 +24,8 @@ const FavoritePanel = ({ favoritePlayers }) => {
                     />
                     <div className="card-body text-center">
                       <h5 className="card-title">{player.strPlayer}</h5>
-                      <p className="card-text">Nacionalidade: {player.strNationality}</p>
-                      <p className="card-text">Time: {player.strTeam}</p>
+                      <p className="card-text">nacionalidade: {player.strNationality}</p>
+                      <p className="card-text">time: {player.strTeam}</p>
                     </div>
                   </div>
                 </div>
