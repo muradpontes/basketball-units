@@ -83,7 +83,7 @@ function App() {
                 type="button"
                 onClick={handleSearch}
               >
-                Buscar
+                buscar
               </button>
             </div>
           </div>
@@ -92,7 +92,7 @@ function App() {
       <div className="row">
         {isLoading ? (
           <div className="col text-center">
-            <p>Carregando...</p>
+            <p>carregando...</p>
           </div>
         ) : players.length > 0 ? (
           players.map((player) => (
