@@ -33,7 +33,7 @@ function App() {
       setPlayers(basketballPlayers.slice(0, playersPerPage));
       setPage(1);
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Erro:', error);
     } finally {
       setIsLoading(false);
     }
@@ -58,8 +58,8 @@ function App() {
     <div className="container">
       <div className="row">
         <div className="col mx-auto text-center mb-10">
-          <h1>Basketball Units 🏀</h1>
-          <h3>Pesquise um jogador</h3>
+          <h1>basketball units 🏀</h1>
+          <h3>pesquise um jogador</h3>
         </div>
       </div>
       <div className="row">
@@ -68,7 +68,7 @@ function App() {
             <input
               type="text"
               className="form-control"
-              placeholder="Insira o nome do jogador"
+              placeholder="insira o nome do jogador"
               value={query}
               onChange={(e) => setquery(e.target.value)}
               onKeyPress={(e) => {
@@ -100,7 +100,7 @@ function App() {
           ))
         ) : (
           <div className="col text-center">
-            {query && <p>Nenhum jogador encontrado.</p>}
+            {query && <p>nenhum jogador encontrado.</p>}
           </div>
         )}
       </div>

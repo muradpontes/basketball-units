@@ -10,7 +10,7 @@ const FavoritePanel = ({ favoritePlayers }) => {
     <div className="col text-center">
       {favoritePlayers.length > 0 && (
         <div>
-          <h2>Atletas Favoritos</h2>
+          <h2>favoritos⭐</h2>
           {rows.map((row, rowIndex) => (
             <div key={rowIndex} className="row">
               {row.map((player) => (
