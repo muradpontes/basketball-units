@@ -3,21 +3,43 @@ import axios from 'axios';
 import FavoritePanel from './components/FavoritePanel';
 import CardAthlete from './components/CardAthlete';
 
-
 function App() {
-  const [query, setquery] = useState('');
+  const [query, setQuery] = useState('');
   const [players, setPlayers] = useState([]);
   const [favoritePlayers, setFavoritePlayers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [playersPerPage] = useState(3);
   const [playersList, setPlayersList] = useState([]);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
 
   useEffect(() => {
     if (query) {
       handleSearch();
     }
   }, [query]);
+
+  useEffect(() => {
+    fetchThingSpeakData();
+  }, []);
+
+  const fetchThingSpeakData = async () => {
+    try {
+      const thingspeakResponse = await axios.get(
+        'https://api.thingspeak.com/channels/2375212/feeds.json?api_key=NCY9HFFH8NJJAZK3'
+      );
+
+      const latestEntry = thingspeakResponse.data.feeds[0];
+      const latitude = latestEntry.field1;
+      const longitude = latestEntry.field2;
+
+      setLatitude(latitude);
+      setLongitude(longitude);
+    } catch (error) {
+      console.error('Erro recuperando dados da API:', error);
+    }
+  };
 
   const handleSearch = async () => {
     setIsLoading(true);
@@ -33,7 +55,7 @@ function App() {
       setPlayers(basketballPlayers.slice(0, playersPerPage));
       setPage(1);
     } catch (error) {
-      console.error('erro:', error);
+      console.error('Error searching for players:', error);
     } finally {
       setIsLoading(false);
     }
@@ -57,9 +79,13 @@ function App() {
   return (
     <div className="container">
       <div className="row">
-        <div className="col mx-auto text-center mb-10">
-          <h1>basketball units 🏀</h1>
-          <h3>pesquise um jogador</h3>
+        <div className="col mx-auto text-center mb-2">
+          {latitude !== null && longitude !== null && (
+            <>
+              <h3>latitude: {latitude}</h3>
+              <h3>longitude: {longitude}</h3>
+            </>
+          )}
         </div>
       </div>
       <div className="row">
@@ -70,7 +96,7 @@ function App() {
               className="form-control"
               placeholder="insira o nome do jogador"
               value={query}
-              onChange={(e) => setquery(e.target.value)}
+              onChange={(e) => setQuery(e.target.value)}
               onKeyPress={(e) => {
                 if (e.key === 'Enter') {
                   handleSearch();
