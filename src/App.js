@@ -11,8 +11,10 @@ function App() {
   const [page, setPage] = useState(1);
   const [playersPerPage] = useState(3);
   const [playersList, setPlayersList] = useState([]);
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
+  const [locationData, setLocationData] = useState({
+    latitude: null,
+    longitude: null,
+  });
 
   useEffect(() => {
     if (query) {
@@ -22,20 +24,32 @@ function App() {
 
   useEffect(() => {
     fetchThingSpeakData();
+    const interval = setInterval(() => {
+      fetchThingSpeakData();
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
+  
   const fetchThingSpeakData = async () => {
     try {
-      const thingspeakResponse = await axios.get(
-        'https://api.thingspeak.com/channels/2375212/feeds.json?api_key=NCY9HFFH8NJJAZK3'
+      const fetchLat = await axios.get(
+        'https://api.thingspeak.com/channels/2375212/fields/1.json?results=2&api_key=UAL7PW8CRBAK5FAK'
       );
 
-      const latestEntry = thingspeakResponse.data.feeds[0];
-      const latitude = latestEntry.field1;
-      const longitude = latestEntry.field2;
+      const fetchLong = await axios.get(
+        'https://api.thingspeak.com/channels/2375212/fields/2.json?results=2&api_key=UAL7PW8CRBAK5FAK'
+      );
 
-      setLatitude(latitude);
-      setLongitude(longitude);
+      const latestLatEntry = fetchLat.data.feeds[0];
+      const latestLongEntry = fetchLong.data.feeds[0];
+    
+      const latitude = latestLatEntry.field1;
+      const longitude = latestLongEntry.field2;
+
+      setLocationData({ latitude, longitude });
+      console.log("latitude: ", latitude);
+      console.log("longitude: ", longitude);
     } catch (error) {
       console.error('Erro recuperando dados da API:', error);
     }
@@ -79,15 +93,15 @@ function App() {
   return (
     <div className="container">
       <div className="row">
-        <div className="col mx-auto text-center mb-2">
-          {latitude !== null && longitude !== null && (
+      <div className="col mx-auto text-center mb-2">
+          {locationData.latitude !== null && locationData.longitude !== null && (
             <>
-              <h3>latitude: {latitude}</h3>
-              <h3>longitude: {longitude}</h3>
+              <h3>latitude: {locationData.latitude}</h3>
+              <h3>longitude: {locationData.longitude}</h3>
             </>
           )}
         </div>
-      </div>
+        </div>
       <div className="row">
         <div className="col">
           <div className="input-group mb-3 mx-auto" style={{ width: '50%' }}>
